@@ -1,4 +1,4 @@
-# gulp-help-four [![NPM version][npm-image]][npm-url]
+# gulp-help-four
 > Temporary gulp help module for gulp 4.0 while task descriptions and 4.0 are still pending
 > Adds a default help task to gulp and provides the ability to add custom help messages to your gulp tasks
 
@@ -186,8 +186,10 @@ You can define a function to run after the default help task runs.
 
 ```js
 require('gulp-help')(gulp, {
-  cb: function(tasks) {
+  cb: function(done) {
+    var tasks = gulp.registry().tasks();
     console.log(tasks);
+    done();
   }
 });
 ```
