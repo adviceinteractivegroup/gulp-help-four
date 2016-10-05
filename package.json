@@ -1,6 +1,6 @@
 {
   "name": "gulp-help-four",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Temporary gulp help module for gulp 4.0 while task descriptions are still pending",
   "main": "index.js",
   "scripts": {
