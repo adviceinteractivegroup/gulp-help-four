@@ -33,7 +33,7 @@ describe('gulp-help', function() {
   });
 
   it('should have the correct description', function(done) {
-    var helpTask = gulp.registry().get('help');
+    var helpTask = gulp.registry().get('help').unwrap();
 
     helpTask.description.should.be.equal('Display this help text.');
 
@@ -49,7 +49,7 @@ describe('gulp-help', function() {
       description: 'new description'
     });
 
-    var helpTask = gulp.registry().get('help');
+    var helpTask = gulp.registry().get('help').unwrap();
 
     helpTask.description.should.be.equal('new description');
 
@@ -65,7 +65,7 @@ describe('gulp-help', function() {
       aliases: ['--help']
     });
 
-    var aliasTask = gulp.registry().get('--help');
+    var aliasTask = gulp.registry().get('--help').unwrap();
     aliasTask.should.be.type('function');
     done();
   });
@@ -85,7 +85,7 @@ describe('gulp-help', function() {
     // stub console.log to prevent the extra output
     test.stub(console, "log");
 
-    var helpTask = gulp.registry().get('help');
+    var helpTask = gulp.registry().get('help').unwrap();
     helpTask();
 
     // restore console.log
@@ -110,7 +110,7 @@ describe('gulp-help', function() {
     // stub console.log to prevent the extra output
     var logStub = test.stub(console, "log");
 
-    var helpTask = gulp.registry().get('help');
+    var helpTask = gulp.registry().get('help').unwrap();
     helpTask(function() {
       var logStubCount = logStub.callCount;
       // restore console.log
@@ -142,7 +142,7 @@ describe('gulp-help', function() {
 
     gulp.task(func);
 
-    var registered = gulp.registry().get('onlyFunction');
+    var registered = gulp.registry().get('onlyFunction').unwrap();
     registered.should.be.equal(func);
 
     done();
@@ -170,7 +170,7 @@ describe('gulp-help', function() {
     var nameFunction = function named() {};
     gulp.task('nameFunction', nameFunction);
 
-    var fn = gulp.registry().get('nameFunction');
+    var fn = gulp.registry().get('nameFunction').unwrap();
     fn.should.be.equal(nameFunction);
 
     done();
@@ -181,7 +181,7 @@ describe('gulp-help', function() {
     };
     gulp.task('nameAnonFunction', nameFunction);
 
-    var fn = gulp.registry().get('nameAnonFunction');
+    var fn = gulp.registry().get('nameAnonFunction').unwrap();
     fn.should.be.equal(nameFunction);
 
     done();
@@ -192,7 +192,7 @@ describe('gulp-help', function() {
     };
     gulp.task('nameDescFunction', 'description', func);
 
-    var fn = gulp.registry().get('nameDescFunction');
+    var fn = gulp.registry().get('nameDescFunction').unwrap();
     fn.should.be.equal(func);
 
     done();
@@ -203,11 +203,11 @@ describe('gulp-help', function() {
     };
     gulp.task('nameDescAliasFunction', 'description', ['aliasFunc'], func);
 
-    var fn = gulp.registry().get('nameDescAliasFunction');
+    var fn = gulp.registry().get('nameDescAliasFunction').unwrap();
     fn.should.be.equal(func);
     fn.description.should.be.equal('description');
 
-    var fn2 = gulp.registry().get('aliasFunc');
+    var fn2 = gulp.registry().get('aliasFunc').unwrap();
     fn2.should.be.equal(func);
     fn2.description.should.be.equal('description');
 
@@ -219,10 +219,10 @@ describe('gulp-help', function() {
     };
     gulp.task('nameAliasFunction', ['aliasFunc2'], func);
 
-    var fn = gulp.registry().get('nameAliasFunction');
+    var fn = gulp.registry().get('nameAliasFunction').unwrap();
     fn.should.be.equal(func);
 
-    var fn2 = gulp.registry().get('aliasFunc2');
+    var fn2 = gulp.registry().get('aliasFunc2').unwrap();
     fn2.should.be.equal(func);
 
     done();
@@ -232,10 +232,10 @@ describe('gulp-help', function() {
     var func = function aliasFunc() {};
     gulp.task(['aliasFunc3'], func);
 
-    var fn = gulp.registry().get('aliasFunc');
+    var fn = gulp.registry().get('aliasFunc').unwrap();
     fn.should.be.equal(func);
 
-    var fn2 = gulp.registry().get('aliasFunc3');
+    var fn2 = gulp.registry().get('aliasFunc3').unwrap();
     fn2.should.be.equal(func);
 
     done();
@@ -246,12 +246,12 @@ describe('gulp-help', function() {
 
     gulp.task('all', 'description', ['aliasFunc4'], {test: '--ok'}, fun);
 
-    var fn = gulp.registry().get('all');
+    var fn = gulp.registry().get('all').unwrap();
     fn.should.be.equal(fun);
     fn.description.should.be.equal('description');
     fn.opts.test.should.be.equal('--ok');
 
-    var fn2 = gulp.registry().get('aliasFunc4');
+    var fn2 = gulp.registry().get('aliasFunc4').unwrap();
     fn2.should.be.equal(fun);
     fn2.description.should.be.equal('description');
     fn.opts.test.should.be.equal('--ok');
@@ -265,7 +265,7 @@ describe('gulp-help', function() {
 
     gulp.task('all', 'description', {test: '--ok'}, fun);
 
-    var fn = gulp.registry().get('all');
+    var fn = gulp.registry().get('all').unwrap();
     fn.should.be.equal(fun);
     fn.description.should.be.equal('description');
     fn.opts.test.should.be.equal('--ok');
@@ -279,11 +279,11 @@ describe('gulp-help', function() {
 
     gulp.task('nameAliasOptsFunc', ['aliasFunc5'], {test: '--ok'}, fun);
 
-    var fn = gulp.registry().get('nameAliasOptsFunc');
+    var fn = gulp.registry().get('nameAliasOptsFunc').unwrap();
     fn.should.be.equal(fun);
     fn.opts.test.should.be.equal('--ok');
 
-    var fn2 = gulp.registry().get('aliasFunc5');
+    var fn2 = gulp.registry().get('aliasFunc5').unwrap();
     fn2.should.be.equal(fun);
     fn2.opts.test.should.be.equal('--ok');
 
@@ -296,11 +296,11 @@ describe('gulp-help', function() {
 
     gulp.task(['aliasFunc6'], {test: '--ok'}, fun);
 
-    var fn = gulp.registry().get('aliasOptFunc');
+    var fn = gulp.registry().get('aliasOptFunc').unwrap();
     fn.should.be.equal(fun);
     fn.opts.test.should.be.equal('--ok');
 
-    var fn2 = gulp.registry().get('aliasFunc6');
+    var fn2 = gulp.registry().get('aliasFunc6').unwrap();
     fn2.should.be.equal(fun);
     fn2.opts.test.should.be.equal('--ok');
 
@@ -313,7 +313,7 @@ describe('gulp-help', function() {
 
     gulp.task({test: '--ok'}, fun);
 
-    var fn = gulp.registry().get('optFunc');
+    var fn = gulp.registry().get('optFunc').unwrap();
     fn.should.be.equal(fun);
     fn.opts.test.should.be.equal('--ok');
 
@@ -325,11 +325,11 @@ describe('gulp-help', function() {
 
     gulp.task('nameAliasOptFunc', ['aliasFunc7'], {test: '--ok'}, fun);
 
-    var fn = gulp.registry().get('nameAliasOptFunc');
+    var fn = gulp.registry().get('nameAliasOptFunc').unwrap();
     fn.should.be.equal(fun);
     fn.opts.test.should.be.equal('--ok');
 
-    var fn2 = gulp.registry().get('aliasFunc7');
+    var fn2 = gulp.registry().get('aliasFunc7').unwrap();
     fn2.should.be.equal(fun);
     fn2.opts.test.should.be.equal('--ok');
 
@@ -341,7 +341,7 @@ describe('gulp-help', function() {
 
     gulp.task('nameOptFunc', {test: '--ok'}, fun);
 
-    var fn = gulp.registry().get('nameOptFunc');
+    var fn = gulp.registry().get('nameOptFunc').unwrap();
     fn.should.be.equal(fun);
     fn.opts.test.should.be.equal('--ok');
     done();

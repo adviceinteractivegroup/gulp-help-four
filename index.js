@@ -114,7 +114,7 @@ var gulpHelpTask = function helpTask(done) {
   });
 
   taskNames.forEach(function(taskName) {
-    var task = gulpRef._registry.get(taskName);
+    var task = gulpRef._registry.get(taskName).unwrap();
     var title = task.description;
 
     var margin = '';
