@@ -29,7 +29,7 @@ var newTaskFunction = function task(name, description, aliases, opts, fn) {
 
   // if we don't have a task let gulp deal with it so we don't break anything
   if (args.length === 0 && typeof fn !== 'function') {
-    return oldTaskFunction(name, fn);
+    return oldTaskFunction(fn);
   }
 
   if (typeof fn !== 'function') {
