@@ -126,7 +126,8 @@ describe('gulp-help', function() {
     });
   });
 
-  it('should throw when no arguments are passed in', function(done) {
+  // we no longer use this test as throwing the exception breaks the default gulp --tasks command
+  xit('should throw when no arguments are passed in', function(done) {
     try {
       gulp.task();
       done(new Error('Didnt throw'));

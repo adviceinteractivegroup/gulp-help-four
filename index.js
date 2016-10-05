@@ -27,7 +27,11 @@ var newTaskFunction = function task(name, description, aliases, opts, fn) {
   var title = false;
   opts = false;
 
-  // ensure we have a task
+  // if we don't have a task let gulp deal with it so we don't break anything
+  if (args.length === 0 && typeof fn !== 'function') {
+    return oldTaskFunction(name, fn);
+  }
+
   if (typeof fn !== 'function') {
     throw new Error('You must supply a function');
   }
