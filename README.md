@@ -32,8 +32,14 @@ Before defining any tasks, add `gulp-help-four` to your gulp instance
 // gulpfile.js
 var gulp = require('gulp');
 var help = require('gulp-help-four');
-help(gulp);
+help(gulp, opts);
 ```
+
+Available options are:
+* description - The default description for the help message
+* hideEmpty - Boolean whether to hide tasks with empty descriptions
+* aliases - Array of aliases for the help command
+* cb - Function to call after the help output has been rendered 
 
 Next, define help text for each custom task
 
